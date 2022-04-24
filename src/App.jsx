@@ -1,12 +1,18 @@
 import React from 'react';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import {Route, Routes} from "react-router-dom";
 import {Col, Container, Row} from "react-bootstrap";
 
 // Components
 import CustomLink from "./components/CustomLink";
 
-const Search = React.lazy(() => import('search'))
+import Home from './components/Home'
+
+// Modules
+const Search = React.lazy(() => import('search/search'))
+const Products = React.lazy(() => import('products/products'))
 
 function App() {
     return (
@@ -27,17 +33,19 @@ function App() {
 
             <Container className="mt-5 d-flex justify-content-center">
                 <Routes>
-                    <Route exact path="/"
-                           element={<h1>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur,
-                               ut!</h1>}/>
-                    <Route path="/search" element={
-                            <React.Suspense fallback={<span className="spinner-border-sm"/>}>
-                                <Search/>
-                            </React.Suspense>
-                        }
+                    <Route exact path="/" element={<Home/>} />
+
+                    <Route exact path="/search" element={
+                        <React.Suspense fallback={<span className="spinner-border-sm"/>}>
+                            <Search/>
+                        </React.Suspense>
+                    }
                     />
 
-                    <Route exact path="/products" element={<h1>products here</h1>}/>
+                    <Route exact path="/products" element={
+                        <React.Suspense fallback={<span className="spinner-border-sm"/>}>
+                            <Products/>
+                        </React.Suspense>}/>
                 </Routes>
             </Container>
         </div>
